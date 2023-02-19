@@ -165,7 +165,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8da05682a41c7c2468742d255bdbbbf1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 0}
+  bulletPrefab: {fileID: 3608364611574918402, guid: c13e345465a6b3f419952d4b92fc5a46, type: 3}
   healthBar: {fileID: 3838202454579362761}
   shootTimer: 3
 --- !u!61 &1959116979787885120

@@ -51,11 +51,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee265b817207472449b6e69196cd376b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainCamera: {fileID: 0}
   moveSpeedMax: 5
   moveSpeedMul: 1
-  bulletPrefab: {fileID: 0}
-  bulletSpeed: 5
+  fireRate: 0.2
+  bulletPrefab: {fileID: 3608364611574918402, guid: c13e345465a6b3f419952d4b92fc5a46, type: 3}
   rb: {fileID: 3440778831923573538}
+  healthBar: {fileID: 3838202454579362761, guid: 91d60fdd9bfc0934d99c714372a6e76d, type: 3}
 --- !u!50 &3440778831923573538
 Rigidbody2D:
   serializedVersion: 4

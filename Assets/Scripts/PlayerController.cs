@@ -12,7 +12,9 @@ public class PlayerController : MonoBehaviour {
 
   public GameObject bulletPrefab;
   public Rigidbody2D rb;
+
   private float _health = 100f;
+  public GameObject healthBar;
 
   private float _lastFire;
 
@@ -51,9 +53,8 @@ public class PlayerController : MonoBehaviour {
   }
 
   private void OnTriggerEnter2D(Collider2D other) {
-    if (!other.CompareTag("Bullet")) return;
-
-    Health -= 5;
+    if (other.gameObject.tag != "Bullet") return;
+    Health -= 10;
   }
 
   private void Fire(Vector2 start, Vector2 end) {
@@ -64,5 +65,13 @@ public class PlayerController : MonoBehaviour {
     Instantiate(bulletPrefab, start, transform.rotation);
   }
 
-  private void OnHealthChanged() { Debug.Log($"player health {Health}"); }
+  private void OnHealthChanged() {
+    var scale = healthBar.transform.localScale;
+
+    scale.x = _health / 100;
+
+    healthBar.transform.localScale = scale;
+
+    if (_health <= 0) Destroy(gameObject);
+  }
 }
