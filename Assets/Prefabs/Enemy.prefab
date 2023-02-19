@@ -164,8 +164,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8da05682a41c7c2468742d255bdbbbf1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
-  bulletPrefab: {fileID: 3608364611574918402, guid: c13e345465a6b3f419952d4b92fc5a46, type: 3}
   healthBar: {fileID: 3838202454579362761}
 --- !u!61 &1959116979787885120
 BoxCollider2D:
@@ -191,7 +189,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.7, y: 0.8}
   m_EdgeRadius: 0
 --- !u!1 &3838202454370098908
 GameObject:
