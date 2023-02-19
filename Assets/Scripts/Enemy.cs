@@ -7,7 +7,6 @@ public class Enemy : MonoBehaviour {
   public GameObject healthBar;
 
   private void Awake() {
-    health = 45;
     OnHealthChanged();
   }
 
