@@ -36,7 +36,6 @@ public class PlayerController : MonoBehaviour {
     var angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg - 90;
     transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
-    // shoot m0
     if (InputHelper.FirePressed && !(Time.time - _lastFire < fireRate)) {
       Fire(pos, mouseWorld);
     }
