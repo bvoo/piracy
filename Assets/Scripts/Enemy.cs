@@ -13,7 +13,9 @@ public class Enemy : MonoBehaviour {
     }
   }
 
+  public GameObject bulletPrefab;
   public GameObject healthBar;
+  public float shootTimer = 3f;
 
   private void OnHealthChanged() {
     var scale = healthBar.transform.localScale;
@@ -27,11 +29,13 @@ public class Enemy : MonoBehaviour {
     }
   }
 
-  private void OnTriggerEnter2D(Collider2D other) {
-    if (!other.CompareTag("Bullet")) return;
-
-    Health -= 5;
-
-    Destroy(other.gameObject);
+  private void FixedUpdate() {
+    if (shootTimer <= 0.5f) {
+      Instantiate(bulletPrefab, transform.position + Vector3.up * 1f, Quaternion.identity);
+      shootTimer = 3f;
+    }
+    else {
+      shootTimer -= Time.deltaTime;
+    }
   }
 }
