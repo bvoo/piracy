@@ -2,6 +2,9 @@ using JetBrains.Annotations;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour {
+  public GameObject bulletPrefab;
+  public GameObject healthBar;
+  public float shootTimer = 3f;
   private float _health = 100f;
 
   [PublicAPI]
@@ -10,22 +13,6 @@ public class Enemy : MonoBehaviour {
     set {
       _health = value;
       OnHealthChanged();
-    }
-  }
-
-  public GameObject bulletPrefab;
-  public GameObject healthBar;
-  public float shootTimer = 3f;
-
-  private void OnHealthChanged() {
-    var scale = healthBar.transform.localScale;
-
-    scale.x = _health / 100;
-
-    healthBar.transform.localScale = scale;
-
-    if (_health <= 0) {
-      Destroy(gameObject);
     }
   }
 
@@ -45,5 +32,15 @@ public class Enemy : MonoBehaviour {
     Health -= 5;
 
     Destroy(other.gameObject);
+  }
+
+  private void OnHealthChanged() {
+    var scale = healthBar.transform.localScale;
+
+    scale.x = _health / 100;
+
+    healthBar.transform.localScale = scale;
+
+    if (_health <= 0) Destroy(gameObject);
   }
 }

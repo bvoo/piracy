@@ -10,20 +10,18 @@ public class Stars : MonoBehaviour {
 
   public Gradient starColor;
 
+  public Transform cameraTransform;
+
   private Vector2 _centerOffset;
 
   private ParticleSystem _particles;
   private ParticleSystem.Particle[] _stars;
 
-  public Transform cameraTransform;
-
   private void Awake() {
     _stars = new ParticleSystem.Particle[starCount];
     _particles = GetComponent<ParticleSystem>();
 
-    if (Camera.main is not null) {
-      starRect = Camera.main.pixelRect.size / 64;
-    }
+    if (Camera.main is not null) starRect = Camera.main.pixelRect.size / 64;
 
     _centerOffset = starRect / 2;
 
@@ -45,25 +43,17 @@ public class Stars : MonoBehaviour {
     _particles.SetParticles(_stars, _stars.Length);
   }
 
-  private static float Remap(float value, float min, float max) { return (value - min) / (max - min); }
-
   private void Update() {
     for (var i = 0; i < starCount; i++) {
       var pos = _stars[i].position + transform.position;
 
-      if (pos.x < cameraTransform.position.x - _centerOffset.x) {
+      if (pos.x < cameraTransform.position.x - _centerOffset.x)
         pos.x += starRect.x;
-      }
-      else if (pos.x > cameraTransform.position.x + _centerOffset.x) {
-        pos.x -= starRect.x;
-      }
+      else if (pos.x > cameraTransform.position.x + _centerOffset.x) pos.x -= starRect.x;
 
-      if (pos.y < cameraTransform.position.y - _centerOffset.y) {
+      if (pos.y < cameraTransform.position.y - _centerOffset.y)
         pos.y += starRect.y;
-      }
-      else if (pos.y > cameraTransform.position.y + _centerOffset.y) {
-        pos.y -= starRect.y;
-      }
+      else if (pos.y > cameraTransform.position.y + _centerOffset.y) pos.y -= starRect.y;
 
       _stars[i].position = pos - transform.position;
     }
@@ -76,6 +66,8 @@ public class Stars : MonoBehaviour {
 
     transform.position = newPos;
   }
+
+  private static float Remap(float value, float min, float max) { return (value - min) / (max - min); }
 
   private Vector2 RandomPosition(Vector2 rect) {
     var x = Random.Range(0, rect.x);

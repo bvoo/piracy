@@ -3,17 +3,6 @@ using JetBrains.Annotations;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
-  private float _health = 100f;
-
-  [PublicAPI]
-  public float Health {
-    get => _health;
-    set {
-      _health = value;
-      OnHealthChanged();
-    }
-  }
-
   public Camera mainCamera;
 
   public float moveSpeedMax = 5f;
@@ -23,16 +12,17 @@ public class PlayerController : MonoBehaviour {
 
   public GameObject bulletPrefab;
   public Rigidbody2D rb;
+  private float _health = 100f;
 
   private float _lastFire;
 
-  private void FixedUpdate() {
-    var mul = InputHelper.MoveInput * moveSpeedMul;
-
-    rb.velocity = new Vector2(
-      Math.Clamp(rb.velocity.x + mul.x, -moveSpeedMax, moveSpeedMax),
-      Math.Clamp(rb.velocity.y + mul.y, -moveSpeedMax, moveSpeedMax)
-    );
+  [PublicAPI]
+  public float Health {
+    get => _health;
+    set {
+      _health = value;
+      OnHealthChanged();
+    }
   }
 
   private void Update() {
@@ -48,9 +38,22 @@ public class PlayerController : MonoBehaviour {
     var angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg - 90;
     transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
-    if (InputHelper.FirePressed && !(Time.time - _lastFire < fireRate)) {
-      Fire(pos, mouseWorld);
-    }
+    if (InputHelper.FirePressed && !(Time.time - _lastFire < fireRate)) Fire(pos, mouseWorld);
+  }
+
+  private void FixedUpdate() {
+    var mul = InputHelper.MoveInput * moveSpeedMul;
+
+    rb.velocity = new Vector2(
+      Math.Clamp(rb.velocity.x + mul.x, -moveSpeedMax, moveSpeedMax),
+      Math.Clamp(rb.velocity.y + mul.y, -moveSpeedMax, moveSpeedMax)
+    );
+  }
+
+  private void OnTriggerEnter2D(Collider2D other) {
+    if (!other.CompareTag("Bullet")) return;
+
+    Health -= 5;
   }
 
   private void Fire(Vector2 start, Vector2 end) {
@@ -62,10 +65,4 @@ public class PlayerController : MonoBehaviour {
   }
 
   private void OnHealthChanged() { Debug.Log($"player health {Health}"); }
-
-  private void OnTriggerEnter2D(Collider2D other) {
-    if (!other.CompareTag("Bullet")) return;
-
-    Health -= 5;
-  }
 }
