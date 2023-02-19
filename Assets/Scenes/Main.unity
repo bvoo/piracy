@@ -167,6 +167,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!224 &469183904 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 8274865781007861724, guid: d9678f13ba8af0b49afd213cd833af24, type: 3}
+  m_PrefabInstance: {fileID: 3440778831654258949}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &515823357
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -259,8 +264,8 @@ MonoBehaviour:
   m_StreamingVersion: 20170927
   m_Priority: 10
   m_StandbyUpdate: 2
-  m_LookAt: {fileID: 0}
-  m_Follow: {fileID: 0}
+  m_LookAt: {fileID: 469183904}
+  m_Follow: {fileID: 469183904}
   m_Lens:
     FieldOfView: 60
     OrthographicSize: 5

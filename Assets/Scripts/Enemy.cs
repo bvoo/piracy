@@ -5,6 +5,7 @@ public class Enemy : MonoBehaviour {
 
   public GameObject bulletPrefab;
   public GameObject healthBar;
+  public float shootTimer = 3f;
 
   private void Awake() {
     OnHealthChanged();
@@ -26,6 +27,13 @@ public class Enemy : MonoBehaviour {
     if (Physics2D.OverlapCircle(transform.position, 0.75f, LayerMask.GetMask("Bullet"))) {
       health -= 10;
       OnHealthChanged();
+    }
+    if (shootTimer <= 0.5f) {
+      
+      Instantiate(bulletPrefab, transform.position + Vector3.up * 1f, Quaternion.identity);
+      shootTimer = 3f;
+    } else {
+      shootTimer -= Time.deltaTime;
     }
   }
 }
