@@ -1,4 +1,5 @@
 using JetBrains.Annotations;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour {
@@ -12,36 +13,38 @@ public class Enemy : MonoBehaviour {
     get => _health;
     set {
       _health = value;
+
       OnHealthChanged();
     }
   }
 
   private void FixedUpdate() {
+    if (Global.Player is null || Global.Player.IsDestroyed()) return;
+
+    var trans = transform;
+
     // rotate towards player
-    var player = GameObject.FindWithTag("Player");
-    if (player == null) return;
-    
-    var dir = player.transform.position - transform.position;
+    var dir = Global.Player.transform.position - trans.position;
     var angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg - 90;
+
     transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-    
+
     if (shootTimer <= 0.5f) {
-      Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+      Debug.Log("shoot");
+      Instantiate(bulletPrefab, trans.position, trans.rotation);
       shootTimer = 3f;
     }
     else {
       shootTimer -= Time.deltaTime;
     }
-
-
   }
 
   private void OnTriggerEnter2D(Collider2D other) {
-    if (!other.CompareTag("Bullet")) return;
+    if (other.CompareTag("PlayerBullet")) {
+      Health -= 5;
 
-    Health -= 5;
-
-    Destroy(other.gameObject);
+      Destroy(other.gameObject);
+    }
   }
 
   private void OnHealthChanged() {

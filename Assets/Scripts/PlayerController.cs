@@ -12,9 +12,9 @@ public class PlayerController : MonoBehaviour {
 
   public GameObject bulletPrefab;
   public Rigidbody2D rb;
+  public GameObject healthBar;
 
   private float _health = 100f;
-  public GameObject healthBar;
 
   private float _lastFire;
 
@@ -26,6 +26,8 @@ public class PlayerController : MonoBehaviour {
       OnHealthChanged();
     }
   }
+
+  private void Awake() { Global.Player = gameObject; }
 
   private void Update() {
     var trans = transform;
@@ -53,8 +55,9 @@ public class PlayerController : MonoBehaviour {
   }
 
   private void OnTriggerEnter2D(Collider2D other) {
-    if (other.gameObject.tag != "Bullet") return;
-    Health -= 10;
+    if (other.CompareTag("EnemyBullet")) {
+      Health -= 10;
+    }
   }
 
   private void Fire(Vector2 start, Vector2 end) {
