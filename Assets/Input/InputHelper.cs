@@ -7,6 +7,9 @@ public class InputHelper : MonoBehaviour {
   public static Vector2 MoveInput { get; private set; } = Vector2.zero;
   public static bool MovePressed { get; private set; }
 
+  public static bool FirePressedThisFrame { get; private set; }
+  public static bool FirePressed { get; private set; }
+
   private void OnEnable() {
     Controls = new Controls();
 
@@ -14,6 +17,11 @@ public class InputHelper : MonoBehaviour {
 
     Controls.Keyboard.Move.performed += OnMove;
     Controls.Keyboard.Move.canceled += OnMove;
+  }
+
+  private void Update() {
+    FirePressedThisFrame = Controls.Keyboard.Fire.WasPressedThisFrame();
+    FirePressed = Controls.Keyboard.Fire.ReadValue<float>() > 0;
   }
 
   private void OnMove(InputAction.CallbackContext context) {

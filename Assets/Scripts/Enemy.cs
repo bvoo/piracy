@@ -1,4 +1,3 @@
-using System;
 using JetBrains.Annotations;
 using UnityEngine;
 
@@ -28,15 +27,7 @@ public class Enemy : MonoBehaviour {
     }
   }
 
-  private void OnCollisionEnter(Collision collision) { Debug.Log("collision enter"); }
-
-  private void OnCollisionEnter2D(Collision2D col) { Debug.Log("collision enter 2d"); }
-
-  private void OnTriggerEnter(Collider other) { Debug.Log("trigger enter"); }
-
   private void OnTriggerEnter2D(Collider2D other) {
-    Debug.Log("trigger enter 2d");
-
     if (!other.CompareTag("Bullet")) return;
 
     Health -= 5;

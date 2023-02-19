@@ -6,5 +6,11 @@ public class BulletController : MonoBehaviour {
 
   private void Start() { Destroy(gameObject, lifetime); }
 
-  private void FixedUpdate() { transform.position += Vector3.up * speed; }
+  private void Update() {
+    var trans = transform;
+
+    var direction = trans.up;
+
+    trans.position += direction * (speed * Time.deltaTime);
+  }
 }
