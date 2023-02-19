@@ -35,8 +35,8 @@ public class Enemy : MonoBehaviour {
     transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
     if (shootTimer <= 0.5f) {
-      Debug.Log("shoot");
       Instantiate(bulletPrefab, trans.position, trans.rotation);
+
       shootTimer = 3f;
     }
     else {
@@ -68,5 +68,9 @@ public class Enemy : MonoBehaviour {
     Instantiate(explosionPrefab, trans.position, trans.rotation);
 
     Destroy(gameObject);
+
+    if (Global.GameManager is not null) {
+      Global.GameManager.OnEnemyDeath();
+    }
   }
 }

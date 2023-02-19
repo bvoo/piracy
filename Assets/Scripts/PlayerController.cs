@@ -93,5 +93,9 @@ public class PlayerController : MonoBehaviour {
     Instantiate(explosionPrefab, trans.position, trans.rotation);
 
     Destroy(gameObject);
+
+    if (Global.GameManager is not null) {
+      Global.GameManager.OnPlayerDie();
+    }
   }
 }
