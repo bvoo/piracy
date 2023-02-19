@@ -2,7 +2,7 @@
 
 [System.Serializable]
 public class Leaderboard {
-  public List<HighScoreEntry> list = new();
+  public List<HighScoreEntry> List = new();
 }
 
 public class HighScoreEntry {

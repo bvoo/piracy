@@ -1,7 +1,9 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using JetBrains.Annotations;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
@@ -30,6 +32,12 @@ public class GameManager : MonoBehaviour {
     }
   }
 
+  private void Update() {
+    if (Keyboard.current.escapeKey.isPressed) {
+      SceneManager.LoadScene("MainMenu");
+    }
+  }
+
   public void OnEnemyDeath() { Score += 5; }
 
   private void OnScoreChange() {
@@ -50,11 +58,12 @@ public class GameManager : MonoBehaviour {
   }
 
   private void SaveScore() {
-    Global.StoredName = nameTextField.value;
-    var existing = XmlManager.instance.leaderboard.list.FirstOrDefault(x => x.Name == Global.StoredName);
+    Global.StoredName = nameTextField?.value ?? "Player";
+
+    var existing = XmlManager.Instance.leaderboard.List.FirstOrDefault(x => x.Name == Global.StoredName);
 
     if (existing is not null) {
-      XmlManager.instance.leaderboard.list.Remove(existing);
+      XmlManager.Instance.leaderboard.List.Remove(existing);
     }
 
     var newEntry = new HighScoreEntry {
@@ -62,6 +71,8 @@ public class GameManager : MonoBehaviour {
       Value = Score,
     };
 
-    XmlManager.instance.leaderboard.list.Add(newEntry);
+    XmlManager.Instance.leaderboard.List.Add(newEntry);
+
+    XmlManager.Instance.SaveScores();
   }
 }

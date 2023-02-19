@@ -6,9 +6,9 @@ public class LeaderboardDisplay : MonoBehaviour {
   public GameObject scorePrefab;
 
   private void Awake() {
-    var leaderboard = XmlManager.instance.leaderboard;
+    var leaderboard = XmlManager.Instance.leaderboard;
 
-    foreach (var entry in leaderboard.list) {
+    foreach (var entry in leaderboard.List) {
       var obj = Instantiate(scorePrefab, scoreList.transform);
       var tmp = obj.GetComponent<TextMeshProUGUI>();
 

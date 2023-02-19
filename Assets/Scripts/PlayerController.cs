@@ -62,9 +62,10 @@ public class PlayerController : MonoBehaviour {
   }
 
   private void OnTriggerEnter2D(Collider2D other) {
-    if (other.CompareTag("EnemyBullet")) {
-      Health -= 10;
-    }
+    if (!other.CompareTag("EnemyBullet")) return;
+
+    Health -= 10;
+    Destroy(other.gameObject);
   }
 
   private void Fire(Vector2 start, Vector2 end) {

@@ -45,11 +45,11 @@ public class Enemy : MonoBehaviour {
   }
 
   private void OnTriggerEnter2D(Collider2D other) {
-    if (other.CompareTag("PlayerBullet")) {
-      Health -= 5;
+    if (!other.CompareTag("PlayerBullet")) return;
 
-      Destroy(other.gameObject);
-    }
+    Health -= 5;
+
+    Destroy(other.gameObject);
   }
 
   private void OnHealthChanged() {

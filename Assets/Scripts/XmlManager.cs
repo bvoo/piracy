@@ -1,27 +1,24 @@
-﻿using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Xml.Serialization;
 using UnityEngine;
 
 public class XmlManager : MonoBehaviour {
-  public static XmlManager instance;
+  public static XmlManager Instance;
   public Leaderboard leaderboard;
 
   private void Awake() {
-    instance = this;
+    Instance = this;
 
-    var leaderboardData = PlayerPrefs.GetString("leaderboard", null);
+    var leaderboardData = PlayerPrefs.GetString("leaderboard", "");
 
-    if (leaderboardData is null) return;
+    if (leaderboardData is null or "") return;
 
     var serializer = new XmlSerializer(typeof(Leaderboard));
 
     leaderboard = serializer.Deserialize(GenerateStreamFromString(leaderboardData)) as Leaderboard;
   }
 
-  public void SaveScores(List<HighScoreEntry> scoresToSave) {
-    leaderboard.list = scoresToSave;
-
+  public void SaveScores() {
     var serializer = new XmlSerializer(typeof(Leaderboard));
 
     var stream = new MemoryStream();
