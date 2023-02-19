@@ -1,11 +1,22 @@
 using UnityEngine;
 
 public class StarParallax : MonoBehaviour {
-  public Transform cameraPos;
+  public Transform cameraTransform;
+
+  public float parallaxFactor;
+
+  private Vector3 _startPos;
+
+  private void Start() { _startPos = transform.position; }
 
   private void Update() {
-    var pos = cameraPos.position;
+    var newPos = cameraTransform.position * parallaxFactor;
 
-    transform.rotation = Quaternion.Euler(pos.y, -pos.x, 0);
+    newPos.z = 0;
+
+    newPos.x += _startPos.x;
+    newPos.y += _startPos.y;
+
+    transform.position = newPos;
   }
 }
