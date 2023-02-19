@@ -38,4 +38,12 @@ public class Enemy : MonoBehaviour {
       shootTimer -= Time.deltaTime;
     }
   }
+
+  private void OnTriggerEnter2D(Collider2D other) {
+    if (!other.CompareTag("Bullet")) return;
+
+    Health -= 5;
+
+    Destroy(other.gameObject);
+  }
 }

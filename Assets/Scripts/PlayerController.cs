@@ -1,7 +1,19 @@
 using System;
+using JetBrains.Annotations;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
+  private float _health = 100f;
+
+  [PublicAPI]
+  public float Health {
+    get => _health;
+    set {
+      _health = value;
+      OnHealthChanged();
+    }
+  }
+
   public Camera mainCamera;
 
   public float moveSpeedMax = 5f;
@@ -48,5 +60,13 @@ public class PlayerController : MonoBehaviour {
     Debug.DrawLine(start, end, Color.red, 1f);
 
     Instantiate(bulletPrefab, start, transform.rotation);
+  }
+
+  private void OnHealthChanged() { Debug.Log($"player health {Health}"); }
+
+  private void OnTriggerEnter2D(Collider2D other) {
+    if (!other.CompareTag("Bullet")) return;
+
+    Health -= 5;
   }
 }
