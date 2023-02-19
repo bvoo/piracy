@@ -17,13 +17,23 @@ public class Enemy : MonoBehaviour {
   }
 
   private void FixedUpdate() {
+    // rotate towards player
+    var player = GameObject.FindWithTag("Player");
+    if (player == null) return;
+    
+    var dir = player.transform.position - transform.position;
+    var angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg - 90;
+    transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+    
     if (shootTimer <= 0.5f) {
-      Instantiate(bulletPrefab, transform.position + Vector3.up * 1f, Quaternion.identity);
+      Instantiate(bulletPrefab, transform.position, Quaternion.identity);
       shootTimer = 3f;
     }
     else {
       shootTimer -= Time.deltaTime;
     }
+
+
   }
 
   private void OnTriggerEnter2D(Collider2D other) {
