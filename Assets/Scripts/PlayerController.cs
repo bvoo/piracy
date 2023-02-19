@@ -1,5 +1,6 @@
 using System;
 using JetBrains.Annotations;
+using TMPro;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
@@ -11,8 +12,11 @@ public class PlayerController : MonoBehaviour {
   public float fireRate = 0.2f;
 
   public GameObject bulletPrefab;
+  public GameObject explosionPrefab;
+
   public Rigidbody2D rb;
   public GameObject healthBar;
+  public TextMeshProUGUI healthText;
 
   private float _health = 100f;
 
@@ -27,7 +31,10 @@ public class PlayerController : MonoBehaviour {
     }
   }
 
-  private void Awake() { Global.Player = gameObject; }
+  private void Awake() {
+    Global.Player = gameObject;
+    Health = 100f;
+  }
 
   private void Update() {
     var trans = transform;
@@ -75,6 +82,16 @@ public class PlayerController : MonoBehaviour {
 
     healthBar.transform.localScale = scale;
 
-    if (_health <= 0) Destroy(gameObject);
+    healthText.text = $"{Math.Clamp(_health, 0, 100)}";
+
+    if (_health <= 0) Die();
+  }
+
+  private void Die() {
+    var trans = transform;
+
+    Instantiate(explosionPrefab, trans.position, trans.rotation);
+
+    Destroy(gameObject);
   }
 }

@@ -3,10 +3,13 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour {
-  public GameObject bulletPrefab;
-  public GameObject healthBar;
   public float shootTimer = 3f;
   private float _health = 100f;
+
+  public GameObject healthBar;
+
+  public GameObject explosionPrefab;
+  public GameObject bulletPrefab;
 
   [PublicAPI]
   public float Health {
@@ -17,6 +20,8 @@ public class Enemy : MonoBehaviour {
       OnHealthChanged();
     }
   }
+
+  private void Awake() { Health = 100f; }
 
   private void FixedUpdate() {
     if (Global.Player is null || Global.Player.IsDestroyed()) return;
@@ -54,6 +59,14 @@ public class Enemy : MonoBehaviour {
 
     healthBar.transform.localScale = scale;
 
-    if (_health <= 0) Destroy(gameObject);
+    if (_health <= 0) Die();
+  }
+
+  private void Die() {
+    var trans = transform;
+
+    Instantiate(explosionPrefab, trans.position, trans.rotation);
+
+    Destroy(gameObject);
   }
 }
